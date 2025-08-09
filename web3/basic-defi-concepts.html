@@ -1,0 +1,734 @@
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DeFi概念入门 | 区块链新手必看</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#E94560",
+              secondary: "#1A1A2E",
+              accent: "#4CC9F0",
+              light: "#F7F7F9",
+              dark: "#16213E",
+            },
+            fontFamily: {
+              sans: ["Inter", "system-ui", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .card-shadow {
+          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05),
+            0 4px 6px -2px rgba(0, 0, 0, 0.03);
+        }
+        .card-hover {
+          transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+            0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .tag-pill {
+          @apply px-2 py-1 rounded-full text-xs font-medium;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-light font-sans text-dark">
+    <!-- 顶部导航栏 -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm">
+      <div
+        class="container mx-auto px-4 py-3 flex justify-between items-center"
+      >
+        <h1
+          class="text-xl md:text-2xl font-bold text-primary flex items-center"
+        >
+          <i class="fa fa-link mr-2"></i>DeFi概念入门
+        </h1>
+        <div class="flex space-x-2">
+          <button
+            class="bg-primary/10 hover:bg-primary/20 text-primary px-3 py-1 rounded-full text-sm flex items-center transition"
+          >
+            <i class="fa fa-heart-o mr-1"></i> 收藏
+          </button>
+          <button
+            class="bg-primary/10 hover:bg-primary/20 text-primary px-3 py-1 rounded-full text-sm flex items-center transition"
+          >
+            <i class="fa fa-share-alt mr-1"></i> 分享
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="container mx-auto px-4 py-6">
+      <!-- 介绍部分 -->
+      <div class="bg-white rounded-2xl p-6 mb-8 shadow-md">
+        <div class="flex items-start">
+          <div class="flex-shrink-0"></div>
+          <div class="ml-4 flex-grow">
+            <h2 class="text-xl font-bold mb-2">Web3 DeFi套利常见概念</h2>
+            <p class="text-gray-600 mb-3">
+              整理了23个最常用的DeFi概念，从基础到进阶，让你快速入门去中心化金融世界
+            </p>
+            <div class="flex items-center text-sm text-gray-500">
+              <span class="flex items-center mr-4"
+                ><i class="fa fa-clock-o mr-1"></i> 5分钟阅读</span
+              >
+              <span class="flex items-center"
+                ><i class="fa fa-eye mr-1"></i> 1.2k浏览</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 分类标签 -->
+      <div class="mb-6 overflow-x-auto pb-2">
+        <div class="flex space-x-2 min-w-max">
+          <button class="tag-pill bg-primary text-white">全部概念</button>
+          <button class="tag-pill bg-gray-200 hover:bg-gray-300">
+            基础概念
+          </button>
+          <button class="tag-pill bg-gray-200 hover:bg-gray-300">
+            交易相关
+          </button>
+          <button class="tag-pill bg-gray-200 hover:bg-gray-300">
+            收益策略
+          </button>
+          <button class="tag-pill bg-gray-200 hover:bg-gray-300">
+            风险相关
+          </button>
+          <button class="tag-pill bg-gray-200 hover:bg-gray-300">
+            进阶概念
+          </button>
+        </div>
+      </div>
+
+      <!-- 概念卡片列表 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- 概念1 -->
+        <div class="bg-white rounded-xl p-5 card-shadow card-hover">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-lg text-secondary">DeFi</h3>
+            <span class="tag-pill bg-blue-100 text-blue-800">基础概念</span>
+          </div>
+          <p class="text-gray-700 text-sm mb-2">
+            <span class="font-medium">全称：</span>Decentralized
+            Finance（去中心化金融）
+          </p>
+          <p class="text-gray-600 text-sm mb-3">
+            不依赖银行等中介，由智能合约提供金融服务的系统
+          </p>
+          <div class="bg-yellow-50 p-3 rounded-lg text-sm">
+            <p class="font-medium text-yellow-800 mb-1">
+              <i class="fa fa-lightbulb-o mr-1"></i> 举例：
+            </p>
+            <p class="text-yellow-700">像一个自动化的银行，全靠代码运作</p>
+          </div>
+        </div>
+
+        <!-- 概念2 -->
+        <div class="bg-white rounded-xl p-5 card-shadow card-hover">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-lg text-secondary">智能合约</h3>
+            <span class="tag-pill bg-blue-100 text-blue-800">基础概念</span>
+          </div>
+          <p class="text-gray-700 text-sm mb-2">
+            <span class="font-medium">英文：</span>Smart Contract
+          </p>
+          <p class="text-gray-600 text-sm mb-3">
+            自动执行、不可更改的区块链程序，用于实现协议逻辑
+          </p>
+          <div class="bg-yellow-50 p-3 rounded-lg text-sm">
+            <p class="font-medium text-yellow-800 mb-1">
+              <i class="fa fa-lightbulb-o mr-1"></i> 举例：
+            </p>
+            <p class="text-yellow-700">
+              像机器自动执行的合同：达成条件→自动触发
+            </p>
+          </div>
+        </div>
+
+        <!-- 概念3 -->
+        <div class="bg-white rounded-xl p-5 card-shadow card-hover">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-lg text-secondary">DEX</h3>
+            <span class="tag-pill bg-green-100 text-green-800">交易相关</span>
+          </div>
+          <p class="text-gray-700 text-sm mb-2">
+            <span class="font-medium">全称：</span>Decentralized
+            Exchange（去中心化交易所）
+          </p>
+          <p class="text-gray-600 text-sm mb-3">
+            不通过中介、直接用钱包交易资产的市场
+          </p>
+          <div class="bg-yellow-50 p-3 rounded-lg text-sm">
+            <p class="font-medium text-yellow-800 mb-1">
+              <i class="fa fa-lightbulb-o mr-1"></i> 举例：
+            </p>
+            <p class="text-yellow-700">
+              类似币安，但你不用注册账号，也不交手续费给平台
+            </p>
+          </div>
+        </div>
+
+        <!-- 概念4 -->
+        <div class="bg-white rounded-xl p-5 card-shadow card-hover">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-lg text-secondary">AMM</h3>
+            <span class="tag-pill bg-green-100 text-green-800">交易相关</span>
+          </div>
+          <p class="text-gray-700 text-sm mb-2">
+            <span class="font-medium">全称：</span>Automated Market
+            Maker（自动做市商）
+          </p>
+          <p class="text-gray-600 text-sm mb-3">
+            一种不依赖订单簿的交易机制，用户和流动性池直接交易
+          </p>
+          <div class="bg-yellow-50 p-3 rounded-lg text-sm">
+            <p class="font-medium text-yellow-800 mb-1">
+              <i class="fa fa-lightbulb-o mr-1"></i> 举例：
+            </p>
+            <p class="text-yellow-700">
+              类似自助兑换机，预先放好钱，别人来用自动换
+            </p>
+          </div>
+        </div>
+
+        <!-- 概念5 -->
+        <div class="bg-white rounded-xl p-5 card-shadow card-hover">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-lg text-secondary">流动性池</h3>
+            <span class="tag-pill bg-green-100 text-green-800">交易相关</span>
+          </div>
+          <p class="text-gray-700 text-sm mb-2">
+            <span class="font-medium">英文：</span>Liquidity Pool
+          </p>
+          <p class="text-gray-600 text-sm mb-3">
+            由用户提供的资金池，用于交易或借贷
+          </p>
+          <div class="bg-yellow-50 p-3 rounded-lg text-sm">
+            <p class="font-medium text-yellow-800 mb-1">
+              <i class="fa fa-lightbulb-o mr-1"></i> 举例：
+            </p>
+            <p class="text-yellow-700">
+              一堆人把钱存入一个智能合约里，让别人交易或借用
+            </p>
+          </div>
+        </div>
+
+        <!-- 概念6 -->
+        <div class="bg-white rounded-xl p-5 card-shadow card-hover">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-lg text-secondary">LP</h3>
+            <span class="tag-pill bg-purple-100 text-purple-800">收益策略</span>
+          </div>
+          <p class="text-gray-700 text-sm mb-2">
+            <span class="font-medium">全称：</span>Liquidity
+            Provider（流动性提供者）
+          </p>
+          <p class="text-gray-600 text-sm mb-3">
+            把资金放进池子里的人，赚交易手续费或奖励
+          </p>
+          <div class="bg-yellow-50 p-3 rounded-lg text-sm">
+            <p class="font-medium text-yellow-800 mb-1">
+              <i class="fa fa-lightbulb-o mr-1"></i> 举例：
+            </p>
+            <p class="text-yellow-700">像把钱存在银行获得利息，但可能有风险</p>
+          </div>
+        </div>
+
+        <!-- 概念7 -->
+        <div class="bg-white rounded-xl p-5 card-shadow card-hover">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-lg text-secondary">Yield Farming</h3>
+            <span class="tag-pill bg-purple-100 text-purple-800">收益策略</span>
+          </div>
+          <p class="text-gray-700 text-sm mb-2">
+            <span class="font-medium">中文：</span>收益耕作
+          </p>
+          <p class="text-gray-600 text-sm mb-3">
+            将资产投进不同DeFi协议中获取最大收益的策略
+          </p>
+          <div class="bg-yellow-50 p-3 rounded-lg text-sm">
+            <p class="font-medium text-yellow-800 mb-1">
+              <i class="fa fa-lightbulb-o mr-1"></i> 举例：
+            </p>
+            <p class="text-yellow-700">
+              类似"搬砖"：把钱从高收益地方搬来搬去套利
+            </p>
+          </div>
+        </div>
+
+        <!-- 概念8 -->
+        <div class="bg-white rounded-xl p-5 card-shadow card-hover">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-lg text-secondary">Staking</h3>
+            <span class="tag-pill bg-purple-100 text-purple-800">收益策略</span>
+          </div>
+          <p class="text-gray-700 text-sm mb-2">
+            <span class="font-medium">中文：</span>质押
+          </p>
+          <p class="text-gray-600 text-sm mb-3">
+            锁定资产在协议中以换取奖励（如ETH的质押）
+          </p>
+          <div class="bg-yellow-50 p-3 rounded-lg text-sm">
+            <p class="font-medium text-yellow-800 mb-1">
+              <i class="fa fa-lightbulb-o mr-1"></i> 举例：
+            </p>
+            <p class="text-yellow-700">
+              存钱在银行定期存款，赚利息，但中途取不出来
+            </p>
+          </div>
+        </div>
+
+        <!-- 概念9 -->
+        <div class="bg-white rounded-xl p-5 card-shadow card-hover">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-lg text-secondary">TVL</h3>
+            <span class="tag-pill bg-indigo-100 text-indigo-800">数据分析</span>
+          </div>
+          <p class="text-gray-700 text-sm mb-2">
+            <span class="font-medium">全称：</span>Total Value
+            Locked（总锁仓量）
+          </p>
+          <p class="text-gray-600 text-sm mb-3">
+            表示一个DeFi协议里总共有多少资金被锁定
+          </p>
+          <div class="bg-yellow-50 p-3 rounded-lg text-sm">
+            <p class="font-medium text-yellow-800 mb-1">
+              <i class="fa fa-lightbulb-o mr-1"></i> 举例：
+            </p>
+            <p class="text-yellow-700">
+              衡量平台"规模"的指标，TVL高代表用户信任高
+            </p>
+          </div>
+        </div>
+
+        <!-- 概念10 -->
+        <div class="bg-white rounded-xl p-5 card-shadow card-hover">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-lg text-secondary">DAO</h3>
+            <span class="tag-pill bg-pink-100 text-pink-800">治理相关</span>
+          </div>
+          <p class="text-gray-700 text-sm mb-2">
+            <span class="font-medium">全称：</span>Decentralized Autonomous
+            Organization（去中心化自治组织）
+          </p>
+          <p class="text-gray-600 text-sm mb-3">
+            由社区治理，没有老板，靠代币投票决定发展方向
+          </p>
+          <div class="bg-yellow-50 p-3 rounded-lg text-sm">
+            <p class="font-medium text-yellow-800 mb-1">
+              <i class="fa fa-lightbulb-o mr-1"></i> 举例：
+            </p>
+            <p class="text-yellow-700">类似"股东大会"，每个人都有表决权</p>
+          </div>
+        </div>
+
+        <!-- 概念11 -->
+        <div class="bg-white rounded-xl p-5 card-shadow card-hover">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-lg text-secondary">LP Token</h3>
+            <span class="tag-pill bg-purple-100 text-purple-800">收益策略</span>
+          </div>
+          <p class="text-gray-700 text-sm mb-2">
+            <span class="font-medium">全称：</span>Liquidity Provider
+            Token（流动性提供者代币）
+          </p>
+          <p class="text-gray-600 text-sm mb-3">
+            成为流动性提供者后获得的凭证，用于代表你在池中的份额
+          </p>
+          <div class="bg-blue-50 p-3 rounded-lg text-sm">
+            <p class="font-medium text-blue-800 mb-1">
+              <i class="fa fa-info-circle mr-1"></i> 为什么要知道：
+            </p>
+            <p class="text-blue-700">
+              拿它可以去其他协议挖矿赚奖励，如Convex、Pendle
+            </p>
+          </div>
+        </div>
+
+        <!-- 概念12 -->
+        <div class="bg-white rounded-xl p-5 card-shadow card-hover">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-lg text-secondary">无常损失</h3>
+            <span class="tag-pill bg-red-100 text-red-800">风险相关</span>
+          </div>
+          <p class="text-gray-700 text-sm mb-2">
+            <span class="font-medium">英文：</span>Impermanent Loss
+          </p>
+          <p class="text-gray-600 text-sm mb-3">
+            当你做LP时，由于两种币价格变动，导致"取出来的资产比单纯持有这两种币还少"的情况
+          </p>
+          <div class="bg-blue-50 p-3 rounded-lg text-sm">
+            <p class="font-medium text-blue-800 mb-1">
+              <i class="fa fa-info-circle mr-1"></i> 为什么要知道：
+            </p>
+            <p class="text-blue-700">做LP前一定要懂，不然可能会亏损</p>
+          </div>
+        </div>
+
+        <!-- 概念13 -->
+        <div class="bg-white rounded-xl p-5 card-shadow card-hover">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-lg text-secondary">抵押率</h3>
+            <span class="tag-pill bg-red-100 text-red-800">风险相关</span>
+          </div>
+          <p class="text-gray-700 text-sm mb-2">
+            <span class="font-medium">英文：</span>Collateral Factor
+          </p>
+          <p class="text-gray-600 text-sm mb-3">
+            借贷协议中，最多能借出你抵押资产的百分比
+          </p>
+          <div class="bg-blue-50 p-3 rounded-lg text-sm">
+            <p class="font-medium text-blue-800 mb-1">
+              <i class="fa fa-info-circle mr-1"></i> 为什么要知道：
+            </p>
+            <p class="text-blue-700">
+              它决定你是否会被清算，比如80%意味着抵押100 USDT最多可借80 USDT
+            </p>
+          </div>
+        </div>
+
+        <!-- 概念14 -->
+        <div class="bg-white rounded-xl p-5 card-shadow card-hover">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-lg text-secondary">清算</h3>
+            <span class="tag-pill bg-red-100 text-red-800">风险相关</span>
+          </div>
+          <p class="text-gray-700 text-sm mb-2">
+            <span class="font-medium">英文：</span>Liquidation
+          </p>
+          <p class="text-gray-600 text-sm mb-3">
+            当你借款过多或抵押资产价格变动导致抵押不足时，系统会强制卖掉你的部分抵押资产以偿还债务
+          </p>
+          <div class="bg-blue-50 p-3 rounded-lg text-sm">
+            <p class="font-medium text-blue-800 mb-1">
+              <i class="fa fa-info-circle mr-1"></i> 为什么要知道：
+            </p>
+            <p class="text-blue-700">
+              如果你借币，务必关注抵押情况，防止被清算
+            </p>
+          </div>
+        </div>
+
+        <!-- 概念15 -->
+        <div class="bg-white rounded-xl p-5 card-shadow card-hover">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-lg text-secondary">APR / APY</h3>
+            <span class="tag-pill bg-indigo-100 text-indigo-800">数据分析</span>
+          </div>
+          <p class="text-gray-700 text-sm mb-2">
+            <span class="font-medium">全称：</span>APR: Annual Percentage
+            Rate；APY: Annual Percentage Yield
+          </p>
+          <p class="text-gray-600 text-sm mb-3">
+            均指年收益率，APR不计算复利，APY包含复利收益
+          </p>
+          <div class="bg-blue-50 p-3 rounded-lg text-sm">
+            <p class="font-medium text-blue-800 mb-1">
+              <i class="fa fa-info-circle mr-1"></i> 为什么要知道：
+            </p>
+            <p class="text-blue-700">
+              能帮你看懂实际收益多少，避免被虚高的APY误导
+            </p>
+          </div>
+        </div>
+
+        <!-- 概念16 -->
+        <div class="bg-white rounded-xl p-5 card-shadow card-hover">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-lg text-secondary">veToken</h3>
+            <span class="tag-pill bg-pink-100 text-pink-800">治理相关</span>
+          </div>
+          <p class="text-gray-700 text-sm mb-2">
+            <span class="font-medium">全称：</span>vote-escrowed
+            Token（锁仓治理代币）
+          </p>
+          <p class="text-gray-600 text-sm mb-3">
+            通过锁仓治理代币获得更高投票权重和奖励的代币（如veCRV、veBAL）
+          </p>
+          <div class="bg-blue-50 p-3 rounded-lg text-sm">
+            <p class="font-medium text-blue-800 mb-1">
+              <i class="fa fa-info-circle mr-1"></i> 为什么要知道：
+            </p>
+            <p class="text-blue-700">
+              这是Curve生态的关键机制之一，直接影响收益分配，决定谁能赚得更多
+            </p>
+          </div>
+        </div>
+
+        <!-- 概念17 -->
+        <div class="bg-white rounded-xl p-5 card-shadow card-hover">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-lg text-secondary">Bribe</h3>
+            <span class="tag-pill bg-pink-100 text-pink-800">治理相关</span>
+          </div>
+          <p class="text-gray-700 text-sm mb-2">
+            <span class="font-medium">中文：</span>行贿投票
+          </p>
+          <p class="text-gray-600 text-sm mb-3">
+            协议通过向veToken持有人发放"投票奖励"，来争夺流动性激励资源的行为
+          </p>
+          <div class="bg-blue-50 p-3 rounded-lg text-sm">
+            <p class="font-medium text-blue-800 mb-1">
+              <i class="fa fa-info-circle mr-1"></i> 为什么要知道：
+            </p>
+            <p class="text-blue-700">
+              这是Curve、Pendle等平台的核心游戏机制，理解它才能看懂平台的利益分配逻辑
+            </p>
+          </div>
+        </div>
+
+        <!-- 概念18 -->
+        <div class="bg-white rounded-xl p-5 card-shadow card-hover">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-lg text-secondary">RWA</h3>
+            <span class="tag-pill bg-orange-100 text-orange-800">进阶概念</span>
+          </div>
+          <p class="text-gray-700 text-sm mb-2">
+            <span class="font-medium">全称：</span>Real World
+            Asset（现实世界资产）
+          </p>
+          <p class="text-gray-600 text-sm mb-3">
+            将现实世界的资产（如国债、房地产等）映射为链上代币的资产形式
+          </p>
+          <div class="bg-blue-50 p-3 rounded-lg text-sm">
+            <p class="font-medium text-blue-800 mb-1">
+              <i class="fa fa-info-circle mr-1"></i> 为什么要知道：
+            </p>
+            <p class="text-blue-700">
+              这是DeFi未来最热门的趋势之一，像Ondo、Maple等项目都在布局，值得重点关注
+            </p>
+          </div>
+        </div>
+
+        <!-- 概念19 -->
+        <div class="bg-white rounded-xl p-5 card-shadow card-hover">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-lg text-secondary">流动性质押</h3>
+            <span class="tag-pill bg-purple-100 text-purple-800">收益策略</span>
+          </div>
+          <p class="text-gray-700 text-sm mb-2">
+            <span class="font-medium">英文：</span>Liquid Staking
+          </p>
+          <p class="text-gray-600 text-sm mb-3">
+            传统质押的资产会被"锁死"，无法灵活使用；流动性质押允许用户质押后获得"衍生品代币"（如质押ETH到Lido，获得stETH），stETH可在DeFi中继续交易、借贷，兼顾收益和流动性
+          </p>
+        </div>
+
+        <!-- 概念20 -->
+        <div class="bg-white rounded-xl p-5 card-shadow card-hover">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-lg text-secondary">预言机</h3>
+            <span class="tag-pill bg-blue-100 text-blue-800">基础概念</span>
+          </div>
+          <p class="text-gray-700 text-sm mb-2">
+            <span class="font-medium">英文：</span>Oracle
+          </p>
+          <p class="text-gray-600 text-sm mb-3">
+            连接区块链与现实世界数据的"桥梁"，因为智能合约无法直接获取链下信息（如股票价格、汇率）
+          </p>
+          <div class="space-y-2 text-sm">
+            <div>
+              <p class="font-medium text-gray-800">作用：</p>
+              <p class="text-gray-600">
+                DeFi协议需要实时数据（如借贷时的资产价格、衍生品的标的价格），依赖预言机提供。
+              </p>
+            </div>
+            <div>
+              <p class="font-medium text-gray-800">例子：</p>
+              <p class="text-gray-600">
+                Chainlink是最大的预言机，为Aave、Synthetix等提供资产价格数据。
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 概念21 -->
+        <div class="bg-white rounded-xl p-5 card-shadow card-hover">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-lg text-secondary">跨链桥</h3>
+            <span class="tag-pill bg-green-100 text-green-800">交易相关</span>
+          </div>
+          <p class="text-gray-700 text-sm mb-2">
+            <span class="font-medium">英文：</span>Cross-Chain Bridge
+          </p>
+          <p class="text-gray-600 text-sm mb-3">
+            连接不同区块链的工具，允许资产从一条链转移到另一条链（如将以太坊的ETH转移到Polygon链）
+          </p>
+          <div class="space-y-2 text-sm">
+            <div>
+              <p class="font-medium text-gray-800">作用：</p>
+              <p class="text-gray-600">
+                DeFi项目可能分布在不同区块链（如以太坊、BSC），跨链桥让资产可以在多链间流动，扩大使用场景。
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 概念22 -->
+        <div class="bg-white rounded-xl p-5 card-shadow card-hover">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-lg text-secondary">闪电贷</h3>
+            <span class="tag-pill bg-orange-100 text-orange-800">进阶概念</span>
+          </div>
+          <p class="text-gray-700 text-sm mb-2">
+            <span class="font-medium">英文：</span>Flash Loan
+          </p>
+          <p class="text-gray-600 text-sm mb-3">
+            无需抵押的瞬时借贷，用户可在同一区块链交易中"借入资产→完成操作（如套利）→偿还本金+利息"，若失败则交易回滚
+          </p>
+          <div class="space-y-2 text-sm">
+            <div>
+              <p class="font-medium text-gray-800">风险：</p>
+              <p class="text-gray-600">
+                常被黑客用于"价格操纵"或"合约漏洞攻击"，普通用户需谨慎使用。
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 概念23 -->
+        <div class="bg-white rounded-xl p-5 card-shadow card-hover">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-lg text-secondary">流动性</h3>
+            <span class="tag-pill bg-green-100 text-green-800">交易相关</span>
+          </div>
+          <p class="text-gray-700 text-sm mb-2">
+            <span class="font-medium">英文：</span>Liquidity
+          </p>
+          <p class="text-gray-600 text-sm mb-3">
+            指资产能够快速买卖且不显著影响价格的能力，或DeFi协议中资金池的可用性，因为去中心化交易和借贷依赖用户提供的资金池来维持运作
+          </p>
+          <div class="space-y-3 text-sm">
+            <div>
+              <p class="font-medium text-gray-800">作用：</p>
+              <ul class="list-disc list-inside text-gray-600 space-y-1">
+                <li>
+                  支持交易：去中心化交易所依赖流动性池实现用户直接兑换资产
+                </li>
+                <li>支撑借贷：借贷协议通过流动性池提供可借贷资金</li>
+                <li>收益机制：流动性提供者通过注入资金赚取手续费或奖励</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 互动区域 -->
+      <div class="bg-white rounded-2xl p-6 mt-8 shadow-md">
+        <h3 class="text-lg font-bold mb-4">💡 学习小贴士</h3>
+        <p class="text-gray-600 mb-4">
+          DeFi概念看起来复杂，但从基础开始逐步理解，很快就能掌握。建议先熟悉核心概念如DeFi、智能合约、DEX，再深入学习收益策略和风险控制。
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 mt-6">
+          <button
+            class="flex-1 bg-primary hover:bg-primary/90 text-white py-3 rounded-full font-medium transition flex items-center justify-center"
+          >
+            <i class="fa fa-heart mr-2"></i> 觉得有用就点赞吧
+          </button>
+          <button
+            class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 rounded-full font-medium transition flex items-center justify-center"
+          >
+            <i class="fa fa-bookmark-o mr-2"></i> 收藏起来慢慢看
+          </button>
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-gray-100">
+          <h4 class="font-medium mb-3">有疑问？评论区告诉我</h4>
+          <div class="flex">
+            <input
+              type="text"
+              placeholder="写下你的问题..."
+              class="flex-grow px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary/50"
+            />
+            <button class="ml-2 bg-primary text-white px-4 py-2 rounded-full">
+              发送
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-white border-t border-gray-200 mt-10 py-6">
+      <div class="container mx-auto px-4 text-center text-gray-500 text-sm">
+        <p>© 2025 DeFi小课堂 | 区块链知识分享</p>
+        <p class="mt-2">投资有风险，入市需谨慎</p>
+      </div>
+    </footer>
+
+    <!-- 回到顶部按钮 -->
+    <button
+      id="backToTop"
+      class="fixed bottom-6 right-6 bg-primary text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center opacity-0 invisible transition-all duration-300"
+    >
+      <i class="fa fa-arrow-up"></i>
+    </button>
+
+    <script>
+      // 回到顶部按钮逻辑
+      const backToTopBtn = document.getElementById("backToTop");
+
+      window.addEventListener("scroll", () => {
+        if (window.pageYOffset > 300) {
+          backToTopBtn.classList.remove("opacity-0", "invisible");
+          backToTopBtn.classList.add("opacity-100", "visible");
+        } else {
+          backToTopBtn.classList.remove("opacity-100", "visible");
+          backToTopBtn.classList.add("opacity-0", "invisible");
+        }
+      });
+
+      backToTopBtn.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+
+      // 卡片点击效果
+      document.querySelectorAll(".card-hover").forEach((card) => {
+        card.addEventListener("click", () => {
+          // 可以添加点击展开详情的逻辑
+          card.classList.add("ring-2", "ring-primary/30");
+          setTimeout(() => {
+            card.classList.remove("ring-2", "ring-primary/30");
+          }, 300);
+        });
+      });
+
+      // 标签点击筛选逻辑
+      document.querySelectorAll(".tag-pill").forEach((tag) => {
+        tag.addEventListener("click", () => {
+          document.querySelectorAll(".tag-pill").forEach((t) => {
+            t.classList.remove("bg-primary", "text-white");
+            if (t.textContent !== "全部概念") {
+              t.classList.add("bg-gray-200", "hover:bg-gray-300");
+            }
+          });
+          tag.classList.remove("bg-gray-200", "hover:bg-gray-300");
+          tag.classList.add("bg-primary", "text-white");
+
+          // 这里可以添加实际的筛选逻辑
+        });
+      });
+    </script>
+  </body>
+</html>

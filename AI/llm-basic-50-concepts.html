@@ -1,0 +1,920 @@
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>大模型常见概念解释 | AI知识参考</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#3B82F6",
+              secondary: "#10B981",
+              accent: "#8B5CF6",
+              dark: "#1E293B",
+              light: "#F8FAFC",
+            },
+            fontFamily: {
+              sans: ["Inter", "system-ui", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .content-auto {
+          content-visibility: auto;
+        }
+        .text-shadow {
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .card-hover {
+          @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
+    <!-- 导航栏 -->
+    <header
+      class="sticky top-0 z-50 bg-white shadow-md transition-all duration-300"
+      id="navbar"
+    >
+      <div
+        class="container mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center"
+      >
+        <div class="flex items-center mb-4 md:mb-0">
+          <i class="fa fa-brain text-primary text-3xl mr-3"></i>
+          <h1 class="text-2xl font-bold text-dark">大模型概念手册</h1>
+        </div>
+
+        <div class="w-full md:w-1/3">
+          <div class="relative">
+            <input
+              type="text"
+              id="search-input"
+              placeholder="搜索概念..."
+              class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
+            />
+            <i class="fa fa-search absolute right-3 top-3 text-gray-400"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- 分类导航 -->
+      <div class="container mx-auto px-4 pb-3 overflow-x-auto scrollbar-hide">
+        <div class="flex space-x-2 md:space-x-4 py-2 min-w-max">
+          <button
+            class="category-btn active px-4 py-2 rounded-full bg-primary text-white text-sm font-medium transition-all"
+            data-category="all"
+          >
+            全部概念
+          </button>
+          <button
+            class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-700 text-sm font-medium transition-all hover:bg-gray-300"
+            data-category="basic"
+          >
+            基础概念
+          </button>
+          <button
+            class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-700 text-sm font-medium transition-all hover:bg-gray-300"
+            data-category="tech"
+          >
+            技术概念
+          </button>
+          <button
+            class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-700 text-sm font-medium transition-all hover:bg-gray-300"
+            data-category="model"
+          >
+            模型类型
+          </button>
+          <button
+            class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-700 text-sm font-medium transition-all hover:bg-gray-300"
+            data-category="application"
+          >
+            应用相关
+          </button>
+          <button
+            class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-700 text-sm font-medium transition-all hover:bg-gray-300"
+            data-category="evaluation"
+          >
+            评估指标
+          </button>
+          <button
+            class="category-btn px-4 py-2 rounded-full bg-gray-200 text-gray-700 text-sm font-medium transition-all hover:bg-gray-300"
+            data-category="ethics"
+          >
+            伦理安全
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+      <!-- 介绍部分 -->
+      <section class="mb-12 text-center max-w-3xl mx-auto">
+        <h2
+          class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-dark mb-4 text-shadow"
+        >
+          大模型常见概念
+        </h2>
+        <p class="text-gray-600 text-lg">
+          收集整理50个大模型核心概念，帮助您快速理解人工智能大模型领域的专业术语和技术原理
+        </p>
+        <div class="mt-6 flex flex-wrap justify-center gap-2">
+          <span
+            class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800"
+          >
+            <i class="fa fa-book mr-1"></i> 50个概念
+          </span>
+          <span
+            class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800"
+          >
+            <i class="fa fa-refresh mr-1"></i> 持续更新
+          </span>
+        </div>
+
+        <!-- 概念分类统计 -->
+        <div
+          class="mt-8 bg-gray-50 rounded-xl p-5 shadow-sm border border-gray-100"
+        >
+          <h3 class="text-lg font-semibold text-gray-700 mb-4">概念分类统计</h3>
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+            <div
+              class="bg-white rounded-lg p-3 shadow-sm flex flex-col items-center"
+            >
+              <span
+                class="text-xs text-blue-800 bg-blue-100 px-2 py-1 rounded-full mb-2"
+                >基础概念</span
+              >
+              <span class="text-2xl font-bold text-primary" id="basic-count"
+                >0</span
+              >
+            </div>
+            <div
+              class="bg-white rounded-lg p-3 shadow-sm flex flex-col items-center"
+            >
+              <span
+                class="text-xs text-purple-800 bg-purple-100 px-2 py-1 rounded-full mb-2"
+                >技术概念</span
+              >
+              <span class="text-2xl font-bold text-accent" id="tech-count"
+                >0</span
+              >
+            </div>
+            <div
+              class="bg-white rounded-lg p-3 shadow-sm flex flex-col items-center"
+            >
+              <span
+                class="text-xs text-green-800 bg-green-100 px-2 py-1 rounded-full mb-2"
+                >模型类型</span
+              >
+              <span class="text-2xl font-bold text-secondary" id="model-count"
+                >0</span
+              >
+            </div>
+            <div
+              class="bg-white rounded-lg p-3 shadow-sm flex flex-col items-center"
+            >
+              <span
+                class="text-xs text-orange-800 bg-orange-100 px-2 py-1 rounded-full mb-2"
+                >应用相关</span
+              >
+              <span
+                class="text-2xl font-bold text-orange-500"
+                id="application-count"
+                >0</span
+              >
+            </div>
+            <div
+              class="bg-white rounded-lg p-3 shadow-sm flex flex-col items-center"
+            >
+              <span
+                class="text-xs text-yellow-800 bg-yellow-100 px-2 py-1 rounded-full mb-2"
+                >评估指标</span
+              >
+              <span
+                class="text-2xl font-bold text-yellow-500"
+                id="evaluation-count"
+                >0</span
+              >
+            </div>
+            <div
+              class="bg-white rounded-lg p-3 shadow-sm flex flex-col items-center"
+            >
+              <span
+                class="text-xs text-red-800 bg-red-100 px-2 py-1 rounded-full mb-2"
+                >伦理安全</span
+              >
+              <span class="text-2xl font-bold text-red-500" id="ethics-count"
+                >0</span
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 概念卡片网格 -->
+      <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- 概念卡片将通过JavaScript动态生成 -->
+      </section>
+
+      <!-- 加载提示 -->
+      <div id="loading" class="flex justify-center items-center py-16">
+        <div
+          class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"
+        ></div>
+      </div>
+
+      <!-- 无结果提示 -->
+      <div id="no-results" class="hidden text-center py-16">
+        <i class="fa fa-search-minus text-5xl text-gray-300 mb-4"></i>
+        <h3 class="text-xl font-medium text-gray-500">未找到相关概念</h3>
+        <p class="text-gray-400 mt-2">请尝试其他搜索词或分类</p>
+      </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-10">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <div class="mb-6 md:mb-0">
+            <div class="flex items-center">
+              <i class="fa fa-brain text-primary text-2xl mr-2"></i>
+              <h3 class="text-xl font-bold">大模型概念手册</h3>
+            </div>
+            <p class="text-gray-400 mt-2">AI知识学习参考资源</p>
+          </div>
+
+          <div class="flex space-x-6">
+            <a
+              href="#"
+              class="text-gray-400 hover:text-white transition-colors"
+            >
+              <i class="fa fa-github text-xl"></i>
+            </a>
+            <a
+              href="#"
+              class="text-gray-400 hover:text-white transition-colors"
+            >
+              <i class="fa fa-twitter text-xl"></i>
+            </a>
+            <a
+              href="#"
+              class="text-gray-400 hover:text-white transition-colors"
+            >
+              <i class="fa fa-linkedin text-xl"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400 text-sm"
+        >
+          <p>© 2025 大模型概念手册 | 参考自相关AI技术文档和资料</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- 回到顶部按钮 -->
+    <button
+      id="back-to-top"
+      class="fixed bottom-6 right-6 bg-primary text-white p-3 rounded-full shadow-lg opacity-0 invisible transition-all duration-300 hover:bg-primary/90"
+    >
+      <i class="fa fa-arrow-up"></i>
+    </button>
+
+    <script>
+      // 大模型概念数据
+      const llmConcepts = [
+        {
+          id: 1,
+          name: "大语言模型 (LLM)",
+          category: "basic",
+          description:
+            "指参数量巨大、训练数据海量的语言模型，能够理解和生成类人文本，具备强大的自然语言处理能力。",
+          icon: "fa-comments",
+        },
+        {
+          id: 2,
+          name: "预训练",
+          category: "basic",
+          description:
+            "在大规模通用数据上对模型进行初始训练的过程，使模型学习语言规律和世界知识，为后续任务奠定基础。",
+          icon: "fa-graduation-cap",
+        },
+        {
+          id: 3,
+          name: "微调 (Fine-tuning)",
+          category: "basic",
+          description:
+            "在预训练模型基础上，使用特定任务数据进行进一步训练，使模型适应特定应用场景的过程。",
+          icon: "fa-sliders",
+        },
+        {
+          id: 4,
+          name: "提示词 (Prompt)",
+          category: "basic",
+          description:
+            "用户输入给大模型的文本指令，用于引导模型生成符合预期的输出结果，是人机交互的主要方式。",
+          icon: "fa-comment",
+        },
+        {
+          id: 5,
+          name: "上下文窗口",
+          category: "basic",
+          description:
+            "大模型能够处理的最大文本长度，包括输入的提示词和生成的输出内容，不同模型有不同的窗口大小限制。",
+          icon: "fa-window-maximize",
+        },
+        {
+          id: 6,
+          name: "少样本学习 (Few-shot Learning)",
+          category: "basic",
+          description:
+            "通过提供少量示例，使模型理解任务要求并生成正确输出的能力，减少了对大量标注数据的依赖。",
+          icon: "fa-clone",
+        },
+        {
+          id: 7,
+          name: "零样本学习 (Zero-shot Learning)",
+          category: "basic",
+          description:
+            "模型在没有任何示例的情况下，仅通过自然语言描述就能理解并执行新任务的能力。",
+          icon: "fa-magic",
+        },
+        {
+          id: 8,
+          name: "生成式AI",
+          category: "basic",
+          description:
+            "能够生成新内容的人工智能技术，包括文本、图像、音频等，大语言模型是生成式AI的重要组成部分。",
+          icon: "fa-creative-commons-share",
+        },
+        {
+          id: 45,
+          name: "参数量",
+          category: "basic",
+          description:
+            "大模型中可学习参数的总数，通常以亿或万亿为单位，是衡量模型规模的重要指标之一。",
+          icon: "fa-calculator",
+        },
+        {
+          id: 9,
+          name: "Transformer",
+          category: "tech",
+          description:
+            "基于自注意力机制的神经网络架构，是现代大语言模型的基础，能够有效处理序列数据并捕捉长距离依赖关系。",
+          icon: "fa-sitemap",
+        },
+        {
+          id: 10,
+          name: "自注意力机制",
+          category: "tech",
+          description:
+            "Transformer中的核心机制，允许模型在处理每个词时关注输入序列中其他相关词，从而更好地理解上下文关系。",
+          icon: "fa-search-plus",
+        },
+        {
+          id: 11,
+          name: "多头注意力",
+          category: "tech",
+          description:
+            "自注意力机制的扩展，通过多个并行的注意力头捕捉不同类型的语义关系，增强模型的表达能力。",
+          icon: "fa-cubes",
+        },
+        {
+          id: 12,
+          name: "编码器-解码器结构",
+          category: "tech",
+          description:
+            "由编码器和解码器两部分组成的模型架构，编码器处理输入，解码器生成输出，适用于翻译等序列转换任务。",
+          icon: "fa-exchange",
+        },
+        {
+          id: 13,
+          name: "仅解码器模型",
+          category: "tech",
+          description:
+            "仅包含解码器部分的Transformer架构，通过自回归方式生成文本，广泛应用于GPT系列等生成式模型。",
+          icon: "fa-forward",
+        },
+        {
+          id: 14,
+          name: "BPE分词 (Byte Pair Encoding)",
+          category: "tech",
+          description:
+            "大模型常用的分词方法，通过合并高频字符对构建词汇表，平衡词汇表大小和语义表达能力。",
+          icon: "fa-code",
+        },
+        {
+          id: 15,
+          name: "Token",
+          category: "tech",
+          description:
+            "模型处理文本的基本单位，可能是字、词或子词，文本需要先转换为Token序列才能被模型处理。",
+          icon: "fa-cube",
+        },
+        {
+          id: 16,
+          name: "嵌入层 (Embedding)",
+          category: "tech",
+          description:
+            "将离散Token转换为连续向量表示的神经网络层，使模型能够理解Token之间的语义关系。",
+          icon: "fa-arrows-alt",
+        },
+        {
+          id: 17,
+          name: "位置编码",
+          category: "tech",
+          description:
+            "用于向模型传递序列中Token位置信息的机制，解决Transformer结构本身不包含位置信息的问题。",
+          icon: "fa-map-marker",
+        },
+        {
+          id: 18,
+          name: "自回归生成",
+          category: "tech",
+          description:
+            "模型一次生成一个Token，并将已生成的Token作为输入继续生成下一个Token的生成方式，保证输出的连贯性。",
+          icon: "fa-step-forward",
+        },
+        {
+          id: 19,
+          name: "束搜索 (Beam Search)",
+          category: "tech",
+          description:
+            "一种生成解码策略，通过保留多个候选序列并选择最优路径，平衡生成质量和计算效率。",
+          icon: "fa-search",
+        },
+        {
+          id: 46,
+          name: "分布式训练",
+          category: "tech",
+          description:
+            "将大模型训练任务分配到多个计算节点上并行处理的技术，是训练超大模型的必要手段。",
+          icon: "fa-server",
+        },
+        {
+          id: 47,
+          name: "量化 (Quantization)",
+          category: "tech",
+          description:
+            "通过降低降低模型参数的数值精度来减少计算资源占用和加速推理的技术，在模型部署中广泛应用。",
+          icon: "fa-compress",
+        },
+        {
+          id: 48,
+          name: "知识蒸馏 (Knowledge Distillation)",
+          category: "tech",
+          description:
+            "将大模型(教师模型)的知识转移到小模型(学生模型)的技术，在保持性能的同时提高提高模型效率。",
+          icon: "fa-flask",
+        },
+        {
+          id: 50,
+          name: "持续学习 (Continual Learning)",
+          category: "tech",
+          description:
+            "使模型能够在不忘记先前知识的情况下不断学习新内容的技术，是实现模型长期进化的关键。",
+          icon: "fa-refresh",
+        },
+        {
+          id: 20,
+          name: "GPT (Generative Pre-trained Transformer)",
+          category: "model",
+          description:
+            "由OpenAI开发的仅解码器Transformer模型系列，通过自回归方式生成文本，在多种自然语言任务中表现优异。",
+          icon: "fa-comment-o",
+        },
+        {
+          id: 21,
+          name: "BERT (Bidirectional Encoder Representations from Transformers)",
+          category: "model",
+          description:
+            "Google开发的双向Transformer编码器模型，通过掩码语言模型任务预训练，在理解任务上表现出色。",
+          icon: "fa-book",
+        },
+        {
+          id: 22,
+          name: "LLaMA (Large Language Model Meta AI)",
+          category: "model",
+          description:
+            "Meta公司发布的开源大语言模型系列，在较小参数量下实现了优异性能，推动了开源社区的发展。",
+          icon: "fa-facebook-square",
+        },
+        {
+          id: 23,
+          name: "PaLM (Pathways Language Model)",
+          category: "model",
+          description:
+            "Google开发的大语言模型，采用Pathways架构，能够高效处理多任务和多模态数据。",
+          icon: "fa-google",
+        },
+        {
+          id: 24,
+          name: "ChatGPT",
+          category: "model",
+          description:
+            "OpenAI基于GPT模型开发的对话系统，通过人类反馈强化学习(RLHF)优化，具有出色的对话能力。",
+          icon: "fa-comments-o",
+        },
+        {
+          id: 25,
+          name: "多模态模型",
+          category: "model",
+          description:
+            "能够处理和理解多种类型数据(文本、图像、音频等)的模型，实现跨模态的信息交互和生成。",
+          icon: "fa-object-group",
+        },
+        {
+          id: 26,
+          name: "MoE (Mixture of Experts)",
+          category: "model",
+          description:
+            "混合专家模型，通过多个专家网络和路由机制，在保持高效训练的同时提升模型容量和性能。",
+          icon: "fa-users",
+        },
+        {
+          id: 27,
+          name: "提示工程 (Prompt Engineering)",
+          category: "application",
+          description:
+            "设计和优化提示词的过程，以引导大模型生成更准确、相关和有用的输出，是大模型应用的关键技能。",
+          icon: "fa-wrench",
+        },
+        {
+          id: 28,
+          name: "RAG (Retrieval-Augmented Generation)",
+          category: "application",
+          description:
+            "检索增强生成，结合信息检索和生成模型，使模型能够基于外部知识生成更准确、可靠的内容。",
+          icon: "fa-database",
+        },
+        {
+          id: 29,
+          name: "AI代理 (AI Agent)",
+          category: "application",
+          description:
+            "基于大模型的自主智能体，能够理解目标、规划行动、执行任务并根据反馈调整策略，实现复杂任务自动化。",
+          icon: "fa-robot",
+        },
+        {
+          id: 30,
+          name: "函数调用 (Function Calling)",
+          category: "application",
+          description:
+            "大模型调用外部工具和API的能力，扩展了模型的功能范围，使其能够执行计算、检索实时信息等操作。",
+          icon: "fa-cogs",
+        },
+        {
+          id: 31,
+          name: "思维链 (Chain of Thought, CoT)",
+          category: "application",
+          description:
+            "引导模型逐步推理的提示技术，通过让模型解释其思考过程，提高在复杂推理任务上的表现。",
+          icon: "fa-link",
+        },
+        {
+          id: 32,
+          name: "上下文学习 (In-context Learning)",
+          category: "application",
+          description:
+            "模型仅通过在提示中提供示例，无需参数更新就能学习执行新任务的能力，是大模型的重要特性。",
+          icon: "fa-graduation-cap",
+        },
+        {
+          id: 33,
+          name: "微调 (LoRA)",
+          category: "application",
+          description:
+            "Low-Rank Adaptation的缩写，一种参数高效微调方法，通过冻结预训练模型权重重并训练低秩矩阵，降低微调成本。",
+          icon: "fa-compress",
+        },
+        {
+          id: 49,
+          name: "上下文学习",
+          category: "application",
+          description:
+            "模型利用提示中的上下文信息理解并执行任务的能力，无需修改模型参数即可适应新任务。",
+          icon: "fa-book",
+        },
+        {
+          id: 34,
+          name: "困惑度 (Perplexity)",
+          category: "evaluation",
+          description:
+            "衡量语言模型预测能力的指标，值越低表示模型对文本的预测越准确，常用于评估模型预训练效果。",
+          icon: "fa-question-circle",
+        },
+        {
+          id: 35,
+          name: "BLEU分数",
+          category: "evaluation",
+          description:
+            "用于评估机器翻译质量的指标，通过比较机器翻译结果与人工翻译参考的相似度来打分。",
+          icon: "fa-language",
+        },
+        {
+          id: 36,
+          name: "ROUGE分数",
+          category: "evaluation",
+          description:
+            "主要用于评估自动文本摘要质量的指标，衡量生成摘要与参考摘要之间的重叠度。",
+          icon: "fa-file-text-o",
+        },
+        {
+          id: 37,
+          name: "人工评估",
+          category: "evaluation",
+          description:
+            "由人类评估者对模型输出质量进行打分的评估方法，虽然成本高，但能更全面地评价模型性能。",
+          icon: "fa-user",
+        },
+        {
+          id: 38,
+          name: "幻觉 (Hallucination)",
+          category: "evaluation",
+          description:
+            "模型生成看似合理但与事实不符的内容的现象，是大模型评估和优化的重要挑战。",
+          icon: "fa-moon-o",
+        },
+        {
+          id: 39,
+          name: "对齐 (Alignment)",
+          category: "ethics",
+          description:
+            "使大模型的目标和行为与人类价值观、意图和伦理准则保持一致的研究领域，确保AI系统安全可控。",
+          icon: "fa-balance-scale",
+        },
+        {
+          id: 40,
+          name: "RLHF (Reinforcement Learning from Human Feedback)",
+          category: "ethics",
+          description:
+            "基于人类反馈的强化学习，通过人类对模型输出的排序和评分来训练奖励模型，进而优化大模型行为。",
+          icon: "fa-thumbs-up",
+        },
+        {
+          id: 41,
+          name: "偏见 (Bias)",
+          category: "ethics",
+          description:
+            "模型在生成内容时表现出的系统性偏向，可能源于训练数据中的不平衡，可能导致不公平或歧视性输出。",
+          icon: "fa-warning",
+        },
+        {
+          id: 42,
+          name: "可解释性 (Interpretability)",
+          category: "ethics",
+          description:
+            "理解和解释模型决策过程的能力，对于确保模型透明度、可靠性和安全性具有重要意义。",
+          icon: "fa-search",
+        },
+        {
+          id: 43,
+          name: "安全性 (Safety)",
+          category: "ethics",
+          description:
+            "确保大模型不会产生有害、危险或滥用内容的研究和实践，是AI发展的重要考量因素。",
+          icon: "fa-shield",
+        },
+        {
+          id: 44,
+          name: "隐私保护",
+          category: "ethics",
+          description:
+            "在大模型训练和应用过程中保护用户数据隐私的技术和方法，防止敏感信息泄露和滥用。",
+          icon: "fa-lock",
+        },
+      ];
+
+      // DOM元素
+      const conceptsContainer = document.querySelector("section.grid");
+      const loadingIndicator = document.getElementById("loading");
+      const noResultsIndicator = document.getElementById("no-results");
+      const searchInput = document.getElementById("search-input");
+      const categoryButtons = document.querySelectorAll(".category-btn");
+      const backToTopButton = document.getElementById("back-to-top");
+      const navbar = document.getElementById("navbar");
+
+      // 初始化页面
+      function init() {
+        // 计算并显示各分类数量
+        calculateCategoryCounts();
+        // 渲染概念卡片
+        renderConcepts(llmConcepts);
+
+        // 搜索功能
+        searchInput.addEventListener("input", handleSearch);
+
+        // 分类筛选
+        categoryButtons.forEach((button) => {
+          button.addEventListener("click", handleCategoryChange);
+        });
+
+        // 回到顶部按钮
+        window.addEventListener("scroll", handleScroll);
+        backToTopButton.addEventListener("click", scrollToTop);
+      }
+
+      // 计算并显示各分类的概念数量
+      function calculateCategoryCounts() {
+        const categories = [
+          "basic",
+          "tech",
+          "model",
+          "application",
+          "evaluation",
+          "ethics",
+        ];
+
+        categories.forEach((category) => {
+          const count = llmConcepts.filter(
+            (concept) => concept.category === category
+          ).length;
+          document.getElementById(`${category}-count`).textContent = count;
+        });
+      }
+
+      // 渲染概念卡片
+      function renderConcepts(concepts) {
+        // 清空容器
+        conceptsContainer.innerHTML = "";
+
+        if (concepts.length === 0) {
+          // 显示无结果提示
+          loadingIndicator.classList.add("hidden");
+          noResultsIndicator.classList.remove("hidden");
+          return;
+        }
+
+        // 隐藏无结果提示
+        noResultsIndicator.classList.add("hidden");
+
+        // 创建概念卡片
+        concepts.forEach((concept) => {
+          const card = document.createElement("div");
+          card.className = `bg-white rounded-xl shadow-md overflow-hidden card-hover concept-card ${concept.category}`;
+          card.setAttribute("data-category", concept.category);
+          card.setAttribute("data-name", concept.name.toLowerCase());
+
+          card.innerHTML = `
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-3">
+                                    <i class="fa ${
+                                      concept.icon
+                                    } text-primary"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold text-dark">${
+                                  concept.name
+                                }</h3>
+                            </div>
+                            <span class="px-2 py-1 text-xs font-medium rounded-full ${getCategoryBadgeClass(
+                              concept.category
+                            )}">
+                                ${getCategoryName(concept.category)}
+                            </span>
+                        </div>
+                        <p class="text-gray-600">${concept.description}</p>
+                    </div>
+                `;
+
+          conceptsContainer.appendChild(card);
+        });
+
+        // 隐藏加载指示器
+        loadingIndicator.classList.add("hidden");
+      }
+
+      // 获取分类标签样式
+      function getCategoryBadgeClass(category) {
+        const classes = {
+          basic: "bg-blue-100 text-blue-800",
+          tech: "bg-purple-100 text-purple-800",
+          model: "bg-green-100 text-green-800",
+          application: "bg-orange-100 text-orange-800",
+          evaluation: "bg-yellow-100 text-yellow-800",
+          ethics: "bg-red-100 text-red-800",
+        };
+        return classes[category] || "bg-gray-100 text-gray-800";
+      }
+
+      // 获取分类名称
+      function getCategoryName(category) {
+        const names = {
+          basic: "基础概念",
+          tech: "技术概念",
+          model: "模型类型",
+          application: "应用相关",
+          evaluation: "评估指标",
+          ethics: "伦理安全",
+        };
+        return names[category] || "其他";
+      }
+
+      // 处理搜索
+      function handleSearch() {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        const activeCategory = document.querySelector(".category-btn.active")
+          .dataset.category;
+
+        let filteredConcepts = llmConcepts;
+
+        // 先按分类筛选
+        if (activeCategory !== "all") {
+          filteredConcepts = filteredConcepts.filter(
+            (concept) => concept.category === activeCategory
+          );
+        }
+
+        // 再按搜索词筛选
+        if (searchTerm) {
+          filteredConcepts = filteredConcepts.filter(
+            (concept) =>
+              concept.name.toLowerCase().includes(searchTerm) ||
+              concept.description.toLowerCase().includes(searchTerm)
+          );
+        }
+
+        renderConcepts(filteredConcepts);
+      }
+
+      // 处理分类变化
+      function handleCategoryChange(e) {
+        // 更新活跃状态
+        categoryButtons.forEach((btn) =>
+          btn.classList.remove("active", "bg-primary", "text-white")
+        );
+        categoryButtons.forEach((btn) =>
+          btn.classList.add("bg-gray-200", "text-gray-700")
+        );
+        e.target.classList.add("active", "bg-primary", "text-white");
+        e.target.classList.remove("bg-gray-200", "text-gray-700");
+
+        // 筛选概念
+        const category = e.target.dataset.category;
+        let filteredConcepts = llmConcepts;
+
+        if (category !== "all") {
+          filteredConcepts = llmConcepts.filter(
+            (concept) => concept.category === category
+          );
+        }
+
+        // 应用搜索词过滤
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        if (searchTerm) {
+          filteredConcepts = filteredConcepts.filter(
+            (concept) =>
+              concept.name.toLowerCase().includes(searchTerm) ||
+              concept.description.toLowerCase().includes(searchTerm)
+          );
+        }
+
+        renderConcepts(filteredConcepts);
+      }
+
+      // 处理滚动事件
+      function handleScroll() {
+        // 显示/隐藏回到顶部按钮
+        if (window.scrollY > 300) {
+          backToTopButton.classList.remove("opacity-0", "invisible");
+          backToTopButton.classList.add("opacity-100", "visible");
+        } else {
+          backToTopButton.classList.add("opacity-0", "invisible");
+          backToTopButton.classList.remove("opacity-100", "visible");
+        }
+
+        // 导航栏滚动效果
+        if (window.scrollY > 50) {
+          navbar.classList.add("py-2");
+          navbar.classList.remove("py-4");
+        } else {
+          navbar.classList.add("py-4");
+          navbar.classList.remove("py-2");
+        }
+      }
+
+      // 滚动到顶部
+      function scrollToTop() {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
+
+      // 页面加载完成后初始化
+      document.addEventListener("DOMContentLoaded", init);
+    </script>
+  </body>
+</html>
