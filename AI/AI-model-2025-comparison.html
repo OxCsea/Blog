@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI模型对比可视化</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind 配置 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#165DFF',
+            secondary: '#36CFC9',
+            accent: '#722ED1',
+            neutral: '#86909C',
+            light: '#F2F3F5',
+            dark: '#1D2129'
+          },
+          fontFamily: {
+            inter: ['Inter', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .card-hover {
+        @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+      }
+      .filter-active {
+        @apply bg-primary text-white;
+      }
+      .gradient-bg {
+        @apply bg-gradient-to-br from-primary/90 to-accent/90;
+      }
+    }
+  </style>
+</head>
+<body class="font-inter bg-gray-50 text-dark">
+  <!-- 导航栏 -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm">
+    <div class="container mx-auto px-4 py-4 flex flex-wrap items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <i class="fa fa-braille text-primary text-2xl"></i>
+        <h1 class="text-xl md:text-2xl font-bold text-primary">AI模型对比平台</h1>
+      </div>
+      
+      <div class="mt-3 md:mt-0 flex items-center">
+        <div class="relative">
+          <input type="text" id="search-input" placeholder="搜索模型或厂家..." 
+                 class="pl-10 pr-4 py-2 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/50 w-full md:w-64">
+          <i class="fa fa-search absolute left-3 top-1/2 -translate-y-1/2 text-neutral"></i>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 英雄区域 -->
+  <section class="gradient-bg text-white py-12 md:py-20">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4">AI模型全面对比</h2>
+      <p class="text-white/80 max-w-2xl mx-auto text-[clamp(1rem,1.5vw,1.25rem)]">
+        探索当前主流AI模型的特点与优势，助您找到最适合的人工智能解决方案
+      </p>
+    </div>
+  </section>
+
+  <!-- 主内容区 -->
+  <main class="container mx-auto px-4 py-10">
+    <!-- 分类筛选 -->
+    <div class="mb-10 overflow-x-auto pb-2">
+      <div class="flex space-x-2 min-w-max">
+        <button class="filter-btn filter-active px-4 py-2 rounded-full text-sm font-medium transition-all" data-filter="all">
+          全部模型
+        </button>
+        <button class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-light transition-all" data-filter="通用">
+          通用模型
+        </button>
+        <button class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-light transition-all" data-filter="推理">
+          推理模型
+        </button>
+        <button class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-light transition-all" data-filter="图像生成">
+          图像生成
+        </button>
+        <button class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-light transition-all" data-filter="视频生成">
+          视频生成
+        </button>
+        <button class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-light transition-all" data-filter="音乐生成">
+          音乐生成
+        </button>
+      </div>
+    </div>
+
+    <!-- 统计概览 -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+      <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-neutral text-sm">总模型数量</p>
+            <h3 class="text-3xl font-bold mt-1" id="total-models">43</h3>
+          </div>
+          <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+            <i class="fa fa-cubes text-primary text-xl"></i>
+          </div>
+        </div>
+      </div>
+      
+      <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-neutral text-sm">模型类型</p>
+            <h3 class="text-3xl font-bold mt-1">5</h3>
+          </div>
+          <div class="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center">
+            <i class="fa fa-tags text-secondary text-xl"></i>
+          </div>
+        </div>
+      </div>
+      
+      <div class="bg-white rounded-xl shadow-sm p-6 card-hover">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-neutral text-sm">主要厂商</p>
+            <h3 class="text-3xl font-bold mt-1">16</h3>
+          </div>
+          <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center">
+            <i class="fa fa-building text-accent text-xl"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 类型分布图表 -->
+    <div class="bg-white rounded-xl shadow-sm p-6 mb-10">
+      <h3 class="text-lg font-semibold mb-4">模型类型分布</h3>
+      <div class="h-64">
+        <canvas id="modelTypeChart"></canvas>
+      </div>
+    </div>
+
+    <!-- 模型卡片网格 -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="models-grid">
+      <!-- 模型卡片将通过JavaScript动态生成 -->
+    </div>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="bg-dark text-white/70 py-10">
+    <div class="container mx-auto px-4">
+      <div class="text-center">
+        <p>© 2023 AI模型对比平台 | 数据来源：模型对比文档</p>
+        <p class="mt-2 text-sm">本平台仅供参考，实际使用请以官方信息为准</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // 模型数据
+    const modelData = [
+      { type: "通用", brand: "OpenAI", model: "GPT-5 (pro/mini/nano)", domain: "综合", features: "写作、编程、研究、战略规划，生态强大，记忆力（recall）强" },
+      { type: "通用", brand: "Anthropic", model: "Claude Opus 4.1", domain: "Coding, 研究, 数据分析", features: "深度研究、数据分析、连续编程，细节追踪和智能体搜索能力突出" },
+      { type: "通用", brand: "Google", model: "Gemini 2.5 Pro", domain: "综合, 搜索", features: "多模态推理、长上下文处理（最长10M token）、深度研究（Deep Research），综合实力最强" },
+      { type: "通用", brand: "xAI", model: "Grok 3.0", domain: "综合, 实时信息", features: "实时接入X平台数据，擅长讨论热点，生成硬件代码有优势" },
+      { type: "通用", brand: "Mistral AI", model: "Mistral Large 2", domain: "综合", features: "性价比高，上下文128K，专注于细分领域创新" },
+      { type: "通用", brand: "深度求索 (DeepSeek)", model: "DeepSeek-V3", domain: "语言理解与生成", features: "纯靠模型实力，服务能力扎实" },
+      { type: "通用", brand: "智谱清言 (ChatGLM)", model: "GLM-4.5", domain: "多模态, 综合", features: "支持图像、视频、文档理解，模型与应用能力并存" },
+      { type: "通用", brand: "字节豆包 (Doubao)", model: "Doubao-Seed-1.6", domain: "综合, K12教育", features: "国内首个支持256K上下文的模型，擅长教育领域" },
+      { type: "通用", brand: "通义千问 (Qwen)", model: "Qwen3 (235B-A22B等)", domain: "综合, Agent", features: "版本多样，支持按需推理和Agent形态，应用生态全面" },
+      { type: "通用", brand: "腾讯", model: "Hunyuan-Large (混元)", domain: "综合", features: "开源MoE模型，上下文长达256K，集成搜索功能" },
+      { type: "通用", brand: "月之暗面 (Kimi)", model: "Kimi K2", domain: "长文本处理, Agent", features: "业界总参数量最大（1T），针对Agent能力优化，擅长前沿知识与编码" },
+      { type: "通用", brand: "百度", model: "文心一言 4.5 Turbo", domain: "综合, 新搜索", features: "发力“新搜索”，RAG能力，全面免费" },
+      { type: "通用", brand: "MiniMax", model: "MiniMax-Text-01", domain: "出海, C端", features: "总参数量456B，主攻海外市场" },
+      { type: "通用", brand: "Meta", model: "Llama 4.0", domain: "综合", features: "开源MoE架构，但近期口碑不佳" },
+      { type: "通用", brand: "Google", model: "Gemma 3.0", domain: "轻量级, 本地部署", features: "基于Gemini的开源小模型，有1B到27B多个尺寸" },
+      { type: "通用", brand: "Microsoft", model: "Phi-4", domain: "复杂推理", features: "小模型（14B），但通过高质量数据训练，推理能力远超同级" },
+      { type: "推理", brand: "OpenAI", model: "GPT-5 thinking, o3 pro", domain: "复杂推理", features: "多模态推理能力大幅提升，深度思考" },
+      { type: "推理", brand: "Anthropic", model: "Claude 4 Opus/Sonnet Extended Thinking", domain: "深度研究", features: "增强的深度思考和扩展推理能力" },
+      { type: "推理", brand: "Google", model: "Gemini 2.5 Pro Deep Think", domain: "超长文本分析", features: "默认thinking模式，支持超长上下文深度推理" },
+      { type: "推理", brand: "xAI", model: "Grok 4", domain: "复杂计算", features: "专为复杂推理和计算任务设计" },
+      { type: "推理", brand: "Mistral AI", model: "Magistral", domain: "快速推理", features: "闭源推理模型，特点是“快”" },
+      { type: "推理", brand: "深度求索 (DeepSeek)", model: "DeepSeek-R1", domain: "数学、逻辑", features: "定位为“理科状元”，对标GPT-5 thinking" },
+      { type: "推理", brand: "通义千问 (Qwen)", model: "Qwen3-235B-A22B-Thinking", domain: "综合推理", features: "Qwen3系列的专用推理版本" },
+      { type: "推理", brand: "智谱清言 (ChatGLM)", model: "GLM-4.5V, GLM-4.5-X", domain: "多模态混合推理", features: "支持多模态任务，可切换“思维推理模式”" },
+      { type: "推理", brand: "腾讯", model: "Hunyuan-A13B", domain: "混合推理, 深度研究", features: "混合推理模型，集成了深度研究智能体" },
+      { type: "推理", brand: "月之暗面 (Kimi)", model: "Kimi-VL-Thinking", domain: "多模态推理", features: "支持多模态输入的深度思考" },
+      { type: "推理", brand: "阶跃星辰 (Stepfun)", model: "Step 3", domain: "视觉与知识交叉分析", features: "强大的视觉感知和复杂跨领域推理能力" },
+      { type: "推理", brand: "MiniMax", model: "MiniMax-M1", domain: "超长文本推理", features: "支持长达1M token的上下文，高效扩展测试时计算" },
+      { type: "图像生成", brand: "Google", model: "Imagen 4", domain: "AI绘画", features: "生图质量高、速度快，在T2I子榜长期领先" },
+      { type: "图像生成", brand: "OpenAI", model: "DALL·E 3, GPT-4o", domain: "AI绘画", features: "GPT-4o的原生图像生成能力强大，可能超越DALL·E 3" },
+      { type: "图像生成", brand: "Midjourney", model: "Midjourney v7", domain: "AI绘画", features: "生图元老，风格化能力强，但更新缓慢" },
+      { type: "图像生成", brand: "Meta", model: "Imagine with Meta AI", domain: "AI绘画", features: "免费使用，效果不错" },
+      { type: "图像生成", brand: "字节豆包 (Doubao)", model: "doubao-seedream 3.0", domain: "中英双语生图", features: "支持原生高分辨率，中英双语生成，指令遵循强" },
+      { type: "图像生成", brand: "快手", model: "可图 (Kolors) v2.1", domain: "AI绘画", features: "国内领先，强化复杂生成能力" },
+      { type: "图像生成", brand: "通义千问 (Qwen)", model: "Qwen-Image", domain: "复杂文本渲染", features: "基于MMDiT的20B大模型，中文文本处理出色" },
+      { type: "图像生成", brand: "智谱清言 (ChatGLM)", model: "CogView4", domain: "任意分辨率生图", features: "支持任意长度输入和任意分辨率输出，文字生成能力强" },
+      { type: "图像生成", brand: "腾讯", model: "Hunyuan DiT", domain: "中英文生图", features: "基于DiT，支持多轮对话完善图像" },
+      { type: "视频生成", brand: "Google", model: "Veo 3", domain: "AI视频", features: "首款视音频同时生成的模型，生成质量顶尖" },
+      { type: "视频生成", brand: "Runway", model: "Gen-4", domain: "AI视频", features: "增强角色和场景一致性，支持长叙事" },
+      { type: "视频生成", brand: "OpenAI", model: "Sora", domain: "AI视频", features: "顶级生成质量，支持10-20秒长视频" },
+      { type: "视频生成", brand: "快手", model: "可灵 (Kling) v2.1", domain: "AI视频", features: "强化复杂运动和主体交互，与Veo 3并列行业top 2" },
+      { type: "视频生成", brand: "字节豆包 (Doubao)", model: "doubao-seedance 1.0", domain: "多镜头叙事", features: "具备多镜头叙事能力，生成影视级美感视频" },
+      { type: "视频生成", brand: "MiniMax", model: "Hailuo(Video)-02", domain: "原生视频", features: "生成1080p原生视频，指令遵循和物理表现能力优秀" },
+      { type: "视频生成", brand: "通义千问 (Qwen)", model: "Wan2.2", domain: "开源视频生成", features: "支持720P@24fps，可在消费级显卡（如4090）上运行" },
+      { type: "视频生成", brand: "腾讯", model: "Hunyuan Video", domain: "开源视频生成", features: "超过13B参数，号称表现超越SOTA" },
+      { type: "音乐生成", brand: "Suno AI", model: "Suno v4.0", domain: "AI作曲", features: "根据歌词和提示生成完整音乐" },
+      { type: "音乐生成", brand: "Mureka", model: "Mureka V7", domain: "AI作曲", features: "采用MusicCoT框架，生成高质量音乐作品" }
+    ];
+
+    // DOM元素
+    const modelsGrid = document.getElementById('models-grid');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const searchInput = document.getElementById('search-input');
+
+    // 初始化页面
+    document.addEventListener('DOMContentLoaded', () => {
+      renderModels(modelData);
+      initChart();
+      setupEventListeners();
+    });
+
+    // 渲染模型卡片
+    function renderModels(models) {
+      modelsGrid.innerHTML = '';
+      
+      if (models.length === 0) {
+        modelsGrid.innerHTML = `
+          <div class="col-span-full py-16 text-center">
+            <i class="fa fa-search text-4xl text-neutral/30 mb-4"></i>
+            <p class="text-neutral">未找到匹配的模型，请尝试其他搜索条件</p>
+          </div>
+        `;
+        return;
+      }
+      
+      models.forEach(model => {
+        const card = document.createElement('div');
+        card.className = `bg-white rounded-xl shadow-sm overflow-hidden card-hover model-card ${model.type}`;
+        card.setAttribute('data-type', model.type);
+        card.setAttribute('data-search', `${model.brand} ${model.model} ${model.domain} ${model.features}`);
+        
+        // 根据模型类型设置不同的标签颜色
+        let typeColor = '';
+        switch(model.type) {
+          case '通用': typeColor = 'bg-primary/10 text-primary'; break;
+          case '推理': typeColor = 'bg-secondary/10 text-secondary'; break;
+          case '图像生成': typeColor = 'bg-accent/10 text-accent'; break;
+          case '视频生成': typeColor = 'bg-orange-100 text-orange-600'; break;
+          case '音乐生成': typeColor = 'bg-green-100 text-green-600'; break;
+        }
+        
+        card.innerHTML = `
+          <div class="p-6">
+            <span class="inline-block px-3 py-1 rounded-full text-xs font-medium ${typeColor} mb-4">${model.type}</span>
+            <h3 class="text-lg font-semibold mb-1">${model.model}</h3>
+            <p class="text-neutral text-sm mb-4">${model.brand}</p>
+            <div class="mb-4">
+              <h4 class="text-sm font-medium text-gray-500 mb-1">主要任务领域</h4>
+              <p class="text-sm">${model.domain}</p>
+            </div>
+            <div>
+              <h4 class="text-sm font-medium text-gray-500 mb-1">擅长功能</h4>
+              <p class="text-sm text-gray-600 line-clamp-3">${model.features}</p>
+            </div>
+          </div>
+        `;
+        
+        modelsGrid.appendChild(card);
+      });
+    }
+
+    // 初始化图表
+    function initChart() {
+      const ctx = document.getElementById('modelTypeChart').getContext('2d');
+      
+      // 统计各类型模型数量
+      const typeCounts = {
+        '通用': modelData.filter(m => m.type === '通用').length,
+        '推理': modelData.filter(m => m.type === '推理').length,
+        '图像生成': modelData.filter(m => m.type === '图像生成').length,
+        '视频生成': modelData.filter(m => m.type === '视频生成').length,
+        '音乐生成': modelData.filter(m => m.type === '音乐生成').length
+      };
+      
+      new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: Object.keys(typeCounts),
+          datasets: [{
+            data: Object.values(typeCounts),
+            backgroundColor: [
+              '#165DFF', // 通用 - 主色
+              '#36CFC9', // 推理 - 次要色
+              '#722ED1', // 图像生成 - 强调色
+              '#FF7D00', // 视频生成 - 橙色
+              '#00B42A'  // 音乐生成 - 绿色
+            ],
+            borderWidth: 0,
+            hoverOffset: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'right',
+              labels: {
+                padding: 20,
+                font: {
+                  family: 'Inter'
+                }
+              }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  const label = context.label || '';
+                  const value = context.raw || 0;
+                  const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                  const percentage = Math.round((value / total) * 100);
+                  return `${label}: ${value} (${percentage}%)`;
+                }
+              }
+            }
+          },
+          cutout: '70%'
+        }
+      });
+    }
+
+    // 设置事件监听器
+    function setupEventListeners() {
+      // 筛选按钮点击事件
+      filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          // 更新按钮样式
+          filterButtons.forEach(btn => btn.classList.remove('filter-active', 'bg-primary', 'text-white'));
+          filterButtons.forEach(btn => btn.classList.add('bg-light'));
+          button.classList.remove('bg-light');
+          button.classList.add('filter-active');
+          
+          const filter = button.getAttribute('data-filter');
+          filterModels(filter);
+        });
+      });
+      
+      // 搜索输入事件
+      searchInput.addEventListener('input', () => {
+        const searchTerm = searchInput.value.toLowerCase();
+        const activeFilter = document.querySelector('.filter-active').getAttribute('data-filter');
+        
+        filterModels(activeFilter, searchTerm);
+      });
+    }
+
+    // 筛选模型
+    function filterModels(filterType, searchTerm = '') {
+      let filteredModels = modelData;
+      
+      // 按类型筛选
+      if (filterType !== 'all') {
+        filteredModels = filteredModels.filter(model => model.type === filterType);
+      }
+      
+      // 按搜索词筛选
+      if (searchTerm) {
+        const term = searchTerm.toLowerCase();
+        filteredModels = filteredModels.filter(model => 
+          model.brand.toLowerCase().includes(term) ||
+          model.model.toLowerCase().includes(term) ||
+          model.domain.toLowerCase().includes(term) ||
+          model.features.toLowerCase().includes(term)
+        );
+      }
+      
+      renderModels(filteredModels);
+    }
+  </script>
+</body>
+</html>
