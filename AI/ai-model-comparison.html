@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI模型对比展示</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- 配置Tailwind -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#165DFF",
+              brand: "#165DFF", // 公司名称颜色改为primary的蓝色
+              general: "#3B82F6", // 通用型 - 蓝色
+              reasoning: "#10B981", // 推理型 - 绿色
+              image: "#F59E0B", // 图像生成 - 橙色
+              video: "#EC4899", // 视频生成 - 粉色
+              music: "#8B5CF6", // 音乐生成 - 紫色
+              // 领域标签颜色
+              field1: "#3B82F6",
+              field2: "#10B981",
+              field3: "#F59E0B",
+              field4: "#EC4899",
+              field5: "#8B5CF6",
+              field6: "#EF4444",
+              field7: "#6366F1",
+              field8: "#F97316",
+            },
+            fontFamily: {
+              inter: ["Inter", "system-ui", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .content-auto {
+          content-visibility: auto;
+        }
+        .card-shadow {
+          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05),
+            0 4px 6px -2px rgba(0, 0, 0, 0.03);
+        }
+        .card-hover {
+          transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+            0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        /* 模型类型标签 - 放大并放置在右上角 */
+        .tag-general {
+          background-color: #3b82f6;
+          color: white;
+        }
+        .tag-reasoning {
+          background-color: #10b981;
+          color: white;
+        }
+        .tag-image {
+          background-color: #f59e0b;
+          color: white;
+        }
+        .tag-video {
+          background-color: #ec4899;
+          color: white;
+        }
+        .tag-music {
+          background-color: #8b5cf6;
+          color: white;
+        }
+        .type-tag {
+          font-size: 0.9rem;
+          padding: 0.35rem 0.75rem;
+          border-radius: 999px;
+          font-weight: 600;
+        }
+        /* 领域标签 - 缩小尺寸 */
+        .field-tag {
+          font-size: 0.7rem;
+          padding: 0.15rem 0.5rem;
+          border-radius: 999px;
+          font-weight: 500;
+          border: 1px solid currentColor;
+        }
+        .brand-name {
+          color: #165dff; /* 公司名称颜色改为primary的蓝色 */
+          font-weight: 600;
+        }
+      }
+    </style>
+  </head>
+  <body class="font-inter bg-gray-50 text-gray-800">
+    <!-- 顶部导航 -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+      <div class="container mx-auto px-4 py-6">
+        <h1
+          class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-primary text-center"
+        >
+          <i class="fa fa-braille mr-2"></i>AI模型对比展示
+        </h1>
+        <p class="text-gray-500 text-center mt-2">
+          全面比较各类人工智能模型的特点与优势
+        </p>
+      </div>
+    </header>
+
+    <!-- 筛选标签 -->
+    <div class="container mx-auto px-4 py-4">
+      <div class="flex flex-wrap gap-2 justify-center mb-6">
+        <button
+          class="filter-btn active px-4 py-2 rounded-full bg-primary text-white text-sm font-medium"
+          data-filter="all"
+        >
+          全部模型
+        </button>
+        <button
+          class="filter-btn px-4 py-2 rounded-full bg-gray-200 text-gray-700 text-sm font-medium"
+          data-filter="通用"
+        >
+          <i class="fa fa-cubes mr-1"></i>通用型
+        </button>
+        <button
+          class="filter-btn px-4 py-2 rounded-full bg-gray-200 text-gray-700 text-sm font-medium"
+          data-filter="推理"
+        >
+          <i class="fa fa-lightbulb-o mr-1"></i>推理型
+        </button>
+        <button
+          class="filter-btn px-4 py-2 rounded-full bg-gray-200 text-gray-700 text-sm font-medium"
+          data-filter="图像生成"
+        >
+          <i class="fa fa-picture-o mr-1"></i>图像生成
+        </button>
+        <button
+          class="filter-btn px-4 py-2 rounded-full bg-gray-200 text-gray-700 text-sm font-medium"
+          data-filter="视频生成"
+        >
+          <i class="fa fa-film mr-1"></i>视频生成
+        </button>
+        <button
+          class="filter-btn px-4 py-2 rounded-full bg-gray-200 text-gray-700 text-sm font-medium"
+          data-filter="音乐生成"
+        >
+          <i class="fa fa-music mr-1"></i>音乐生成
+        </button>
+      </div>
+    </div>
+
+    <!-- 主要内容区 -->
+    <main class="container mx-auto px-4 pb-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- 动态生成的卡片将插入这里 -->
+      </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-800 text-white py-8">
+      <div class="container mx-auto px-4 text-center">
+        <p>AI模型对比展示 &copy; 2023</p>
+        <p class="text-gray-400 text-sm mt-2">数据来源：模型对比文档</p>
+      </div>
+    </footer>
+
+    <script>
+      // 模型数据
+      const models = [
+        {
+          type: "通用",
+          brand: "OpenAI",
+          model: "GPT-5 (pro/mini/nano)",
+          field: "综合",
+          advantage: "写作、编程、研究、战略规划，生态强大，记忆力（recall）强",
+        },
+        {
+          type: "通用",
+          brand: "Anthropic",
+          model: "Claude Opus 4.1",
+          field: "Coding, 研究, 数据分析",
+          advantage:
+            "深度研究、数据分析、连续编程，细节追踪和智能体搜索能力突出",
+        },
+        {
+          type: "通用",
+          brand: "Google",
+          model: "Gemini 2.5 Pro",
+          field: "综合, 搜索",
+          advantage:
+            "多模态推理、长上下文处理（最长10M token）、深度研究（Deep Research），综合实力最强",
+        },
+        {
+          type: "通用",
+          brand: "xAI",
+          model: "Grok 3.0",
+          field: "综合, 实时信息",
+          advantage: "实时接入X平台数据，擅长讨论热点，生成硬件代码有优势",
+        },
+        {
+          type: "通用",
+          brand: "Mistral AI",
+          model: "Mistral Large 2",
+          field: "综合",
+          advantage: "性价比高，上下文128K，专注于细分领域创新",
+        },
+        {
+          type: "通用",
+          brand: "深度求索 (DeepSeek)",
+          model: "DeepSeek-V3",
+          field: "语言理解与生成",
+          advantage: "纯靠模型实力，服务能力扎实",
+        },
+        {
+          type: "通用",
+          brand: "智谱清言 (ChatGLM)",
+          model: "GLM-4.5",
+          field: "多模态, 综合",
+          advantage: "支持图像、视频、文档理解，模型与应用能力并存",
+        },
+        {
+          type: "通用",
+          brand: "字节豆包 (Doubao)",
+          model: "Doubao-Seed-1.6",
+          field: "综合, K12教育",
+          advantage: "国内首个支持256K上下文的模型，擅长教育领域",
+        },
+        {
+          type: "通用",
+          brand: "通义千问 (Qwen)",
+          model: "Qwen3 (235B-A22B等)",
+          field: "综合, Agent",
+          advantage: "版本多样，支持按需推理和Agent形态，应用生态全面",
+        },
+        {
+          type: "通用",
+          brand: "腾讯",
+          model: "Hunyuan-Large (混元)",
+          field: "综合",
+          advantage: "开源MoE模型，上下文长达256K，集成搜索功能",
+        },
+        {
+          type: "通用",
+          brand: "月之暗面 (Kimi)",
+          model: "Kimi K2",
+          field: "长文本处理, Agent",
+          advantage:
+            "业界总参数量最大（1T），针对Agent能力优化，擅长前沿知识与编码",
+        },
+        {
+          type: "通用",
+          brand: "百度",
+          model: "文心一言 4.5 Turbo",
+          field: "综合, 新搜索",
+          advantage: "发力“新搜索”，RAG能力，全面免费",
+        },
+        {
+          type: "通用",
+          brand: "MiniMax",
+          model: "MiniMax-Text-01",
+          field: "出海, C端",
+          advantage: "总参数量456B，主攻海外市场",
+        },
+        {
+          type: "通用",
+          brand: "Meta",
+          model: "Llama 4.0",
+          field: "综合",
+          advantage: "开源MoE架构，但近期口碑不佳",
+        },
+        {
+          type: "通用",
+          brand: "Google",
+          model: "Gemma 3.0",
+          field: "轻量级, 本地部署",
+          advantage: "基于Gemini的开源小模型，有1B到27B多个尺寸",
+        },
+        {
+          type: "通用",
+          brand: "Microsoft",
+          model: "Phi-4",
+          field: "复杂推理",
+          advantage: "小模型（14B），但通过高质量数据训练，推理能力远超同级",
+        },
+        {
+          type: "推理",
+          brand: "OpenAI",
+          model: "GPT-5 thinking, o3 pro",
+          field: "复杂推理",
+          advantage: "多模态推理能力大幅提升，深度思考",
+        },
+        {
+          type: "推理",
+          brand: "Anthropic",
+          model: "Claude 4 Opus/Sonnet Extended Thinking",
+          field: "深度研究",
+          advantage: "增强的深度思考和扩展推理能力",
+        },
+        {
+          type: "推理",
+          brand: "Google",
+          model: "Gemini 2.5 Pro Deep Think",
+          field: "超长文本分析",
+          advantage: "默认thinking模式，支持超长上下文深度推理",
+        },
+        {
+          type: "推理",
+          brand: "xAI",
+          model: "Grok 4",
+          field: "复杂计算",
+          advantage: "专为复杂推理和计算任务设计",
+        },
+        {
+          type: "推理",
+          brand: "Mistral AI",
+          model: "Magistral",
+          field: "快速推理",
+          advantage: "闭源推理模型，特点是“快”",
+        },
+        {
+          type: "推理",
+          brand: "深度求索 (DeepSeek)",
+          model: "DeepSeek-R1",
+          field: "数学、逻辑",
+          advantage: "定位为“理科状元”，对标GPT-5 thinking",
+        },
+        {
+          type: "推理",
+          brand: "通义千问 (Qwen)",
+          model: "Qwen3-235B-A22B-Thinking",
+          field: "综合推理",
+          advantage: "Qwen3系列的专用推理版本",
+        },
+        {
+          type: "推理",
+          brand: "智谱清言 (ChatGLM)",
+          model: "GLM-4.5V, GLM-4.5-X",
+          field: "多模态混合推理",
+          advantage: "支持多模态任务，可切换“思维推理模式”",
+        },
+        {
+          type: "推理",
+          brand: "腾讯",
+          model: "Hunyuan-A13B",
+          field: "混合推理, 深度研究",
+          advantage: "混合推理模型，集成了深度研究智能体",
+        },
+        {
+          type: "推理",
+          brand: "月之暗面 (Kimi)",
+          model: "Kimi-VL-Thinking",
+          field: "多模态推理",
+          advantage: "支持多模态输入的深度思考",
+        },
+        {
+          type: "推理",
+          brand: "阶跃星辰 (Stepfun)",
+          model: "Step 3",
+          field: "视觉与知识交叉分析",
+          advantage: "强大的视觉感知和复杂跨领域推理能力",
+        },
+        {
+          type: "推理",
+          brand: "MiniMax",
+          model: "MiniMax-M1",
+          field: "超长文本推理",
+          advantage: "支持长达1M token的上下文，高效扩展测试时计算",
+        },
+        {
+          type: "图像生成",
+          brand: "Google",
+          model: "Imagen 4",
+          field: "AI绘画",
+          advantage: "生图质量高、速度快，在T2I子榜长期领先",
+        },
+        {
+          type: "图像生成",
+          brand: "OpenAI",
+          model: "DALL·E 3, GPT-4o",
+          field: "AI绘画",
+          advantage: "GPT-4o的原生图像生成能力强大，可能超越DALL·E 3",
+        },
+        {
+          type: "图像生成",
+          brand: "Midjourney",
+          model: "Midjourney v7",
+          field: "AI绘画",
+          advantage: "生图元老，风格化能力强，但更新缓慢",
+        },
+        {
+          type: "图像生成",
+          brand: "Meta",
+          model: "Imagine with Meta AI",
+          field: "AI绘画",
+          advantage: "免费使用，效果不错",
+        },
+        {
+          type: "图像生成",
+          brand: "字节豆包 (Doubao)",
+          model: "doubao-seedream 3.0",
+          field: "中英双语生图",
+          advantage: "支持原生高分辨率，中英双语生成，指令遵循强",
+        },
+        {
+          type: "图像生成",
+          brand: "快手",
+          model: "可图 (Kolors) v2.1",
+          field: "AI绘画",
+          advantage: "国内领先，强化复杂生成能力",
+        },
+        {
+          type: "图像生成",
+          brand: "通义千问 (Qwen)",
+          model: "Qwen-Image",
+          field: "复杂文本渲染",
+          advantage: "基于MMDiT的20B大模型，中文文本处理出色",
+        },
+        {
+          type: "图像生成",
+          brand: "智谱清言 (ChatGLM)",
+          model: "CogView4",
+          field: "任意分辨率生图",
+          advantage: "支持任意长度输入和任意分辨率输出，文字生成能力强",
+        },
+        {
+          type: "图像生成",
+          brand: "腾讯",
+          model: "Hunyuan DiT",
+          field: "中英文生图",
+          advantage: "基于DiT，支持多轮对话完善图像",
+        },
+        {
+          type: "视频生成",
+          brand: "Google",
+          model: "Veo 3",
+          field: "AI视频",
+          advantage: "首款视音频同时生成的模型，生成质量顶尖",
+        },
+        {
+          type: "视频生成",
+          brand: "Runway",
+          model: "Gen-4",
+          field: "AI视频",
+          advantage: "增强角色和场景一致性，支持长叙事",
+        },
+        {
+          type: "视频生成",
+          brand: "OpenAI",
+          model: "Sora",
+          field: "AI视频",
+          advantage: "顶级生成质量，支持10-20秒长视频",
+        },
+        {
+          type: "视频生成",
+          brand: "快手",
+          model: "可灵 (Kling) v2.1",
+          field: "AI视频",
+          advantage: "强化复杂运动和主体交互，与Veo 3并列行业top 2",
+        },
+        {
+          type: "视频生成",
+          brand: "字节豆包 (Doubao)",
+          model: "doubao-seedance 1.0",
+          field: "多镜头叙事",
+          advantage: "具备多镜头叙事能力，生成影视级美感视频",
+        },
+        {
+          type: "视频生成",
+          brand: "MiniMax",
+          model: "Hailuo(Video)-02",
+          field: "原生视频",
+          advantage: "生成1080p原生视频，指令遵循和物理表现能力优秀",
+        },
+        {
+          type: "视频生成",
+          brand: "通义千问 (Qwen)",
+          model: "Wan2.2",
+          field: "开源视频生成",
+          advantage: "支持720P@24fps，可在消费级显卡（如4090）上运行",
+        },
+        {
+          type: "视频生成",
+          brand: "腾讯",
+          model: "Hunyuan Video",
+          field: "开源视频生成",
+          advantage: "超过13B参数，号称表现超越SOTA",
+        },
+        {
+          type: "音乐生成",
+          brand: "Suno AI",
+          model: "Suno v4.0",
+          field: "AI作曲",
+          advantage: "根据歌词和提示生成完整音乐",
+        },
+        {
+          type: "音乐生成",
+          brand: "Mureka",
+          model: "Mureka V7",
+          field: "AI作曲",
+          advantage: "采用MusicCoT框架，生成高质量音乐作品",
+        },
+      ];
+
+      // 领域标签颜色类数组
+      const fieldColors = [
+        "bg-field1/10 text-field1",
+        "bg-field2/10 text-field2",
+        "bg-field3/10 text-field3",
+        "bg-field4/10 text-field4",
+        "bg-field5/10 text-field5",
+        "bg-field6/10 text-field6",
+        "bg-field7/10 text-field7",
+        "bg-field8/10 text-field8",
+      ];
+
+      // 获取容器
+      const container = document.querySelector("main .grid");
+
+      // 生成卡片
+      function renderCards(filter = "all") {
+        container.innerHTML = "";
+
+        const filteredModels =
+          filter === "all"
+            ? models
+            : models.filter((model) => model.type === filter);
+
+        if (filteredModels.length === 0) {
+          container.innerHTML = `
+          <div class="col-span-full py-16 text-center">
+            <i class="fa fa-search-minus text-5xl text-gray-300 mb-4"></i>
+            <p class="text-gray-500">没有找到匹配的模型</p>
+          </div>
+        `;
+          return;
+        }
+
+        filteredModels.forEach((model) => {
+          const card = document.createElement("div");
+          card.className = `bg-white rounded-xl overflow-hidden card-shadow card-hover`;
+          card.setAttribute("data-type", model.type);
+
+          // 根据类型设置不同的标签样式
+          let tagClass = "";
+          switch (model.type) {
+            case "通用":
+              tagClass = "tag-general";
+              break;
+            case "推理":
+              tagClass = "tag-reasoning";
+              break;
+            case "图像生成":
+              tagClass = "tag-image";
+              break;
+            case "视频生成":
+              tagClass = "tag-video";
+              break;
+            case "音乐生成":
+              tagClass = "tag-music";
+              break;
+          }
+
+          // 处理领域标签，按逗号或空格分割成多个独立标签
+          const fieldItems = model.field
+            .split(/[,，\s]+/)
+            .filter((item) => item.trim() !== "");
+          let fieldTagsHtml = "";
+
+          fieldItems.forEach((item, index) => {
+            // 循环使用颜色数组
+            const colorIndex = index % fieldColors.length;
+            fieldTagsHtml += `<span class="field-tag ${fieldColors[colorIndex]}">${item}</span>`;
+          });
+
+          card.innerHTML = `
+          <div class="p-5 relative">
+            <!-- 模型类型标签 - 右上角 -->
+            <div class="absolute top-4 right-4">
+              <span class="type-tag ${tagClass}">
+                ${model.type}
+              </span>
+            </div>
+            
+            <!-- 品牌信息 -->
+            <div class="mb-3">
+              <span class="brand-name text-base">
+                ${model.brand}
+              </span>
+            </div>
+            
+            <!-- 模型名称和领域标签 - 增大模型名称字体 -->
+            <div class="flex flex-wrap items-center gap-2 mb-4">
+              <h3 class="text-xl font-semibold text-gray-800">${model.model}</h3>  <!-- 从text-lg改为text-xl -->
+              ${fieldTagsHtml}
+            </div>
+            
+            <!-- 直接展示擅长功能内容，删除提示文字 -->
+            <div class="mt-2">
+              <p class="text-gray-700 text-lg leading-relaxed">
+                ${model.advantage}
+              </p>
+            </div>
+          </div>
+        `;
+
+          container.appendChild(card);
+        });
+      }
+
+      // 初始化页面
+      renderCards();
+
+      // 筛选功能
+      const filterButtons = document.querySelectorAll(".filter-btn");
+      filterButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          // 更新按钮样式
+          filterButtons.forEach((btn) => {
+            btn.classList.remove("bg-primary", "text-white");
+            btn.classList.add("bg-gray-200", "text-gray-700");
+          });
+          button.classList.remove("bg-gray-200", "text-gray-700");
+          button.classList.add("bg-primary", "text-white");
+
+          // 渲染筛选后的卡片
+          const filter = button.getAttribute("data-filter");
+          renderCards(filter);
+        });
+      });
+    </script>
+  </body>
+</html>
